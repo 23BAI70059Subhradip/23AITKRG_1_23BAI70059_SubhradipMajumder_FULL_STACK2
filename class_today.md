@@ -335,3 +335,34 @@ This strict mode is used to create the app rendered twice using the VDOM it is s
 - Ensuring Reusable State: In React 18, it helps ensure that components can handle being unmounted and remounted while preserving their state, a necessary behavior for future concurrent features. 
 
 By using Strict Mode, you can catch a variety of subtle issues and follow best practices, leading to higher quality and more maintainable code. 
+
+
+
+# Exp3 
+## Redux 
+we dont led componetns let change the value in the global state. It act as the exteranl central store for the react app. It holds the states together. 
+Redux is a standalone JavaScript library for predictable, centralized state management in applications, commonly used with React via the official React Redux library. The recommended modern approach for integrating Redux in React applications is using Redux Toolkit (RTK), which simplifies setup and reduces boilerplate code. 
+
+component -> reducer(external storage) -> store -> UI; 
+
+**Components and the Principals**
+
+**Redux Toolkit** it's an lib that has the boiler plate code into it and it is very verbose in nature, it reduces that. 
+Functions 
+- Configure store like useContext(null); 
+- Creating Slice => creates the disection for different store all together, like mall have different section. 
+- CreateAsyncThunk => just acts like the promise and it will provide the capture valut trade here.  Binding the state to the initial state, example is the cart system.
+
+## Redux vs ContextAPI
+
+
+## Store 
+The global container for application store. **CreatedOnce**
+1. Current state 
+2. Reducers 
+3. Middleware
+
+**slice** have its own reducer logic but they all are in the same container, and the actions are done by the components.
+**Lazy loading** is a performance optimization technique that defers loading non-critical resources (like images, videos, or code modules) until they are actually needed, usually when a user scrolls to them or interacts with the page, resulting in faster initial page loads, reduced bandwidth, and better user experience, unlike "eager loading" which loads everything at once.
+
+
