@@ -365,4 +365,38 @@ The global container for application store. **CreatedOnce**
 **slice** have its own reducer logic but they all are in the same container, and the actions are done by the components.
 **Lazy loading** is a performance optimization technique that defers loading non-critical resources (like images, videos, or code modules) until they are actually needed, usually when a user scrolls to them or interacts with the page, resulting in faster initial page loads, reduced bandwidth, and better user experience, unlike "eager loading" which loads everything at once.
 
+# Exp5 Unit 2 
+testing 
 
+**types**
+1. **Uni*t testing** one perticular component and function outputs.
+2. **Integration** comunation of multiple components and what the dev actually works. example = API testing like mocking the api for faster checkking. 
+3. **End to End Testing** the entire testing. 
+
+*Jest* is used the unit testing and *React Testing Library* is used to integration testing.
+
+## Jest
+Most financial for each api, 20 to 100 tests are written to run the code.for each the api call need to api calls to test (increase the calls financial). It gives us the feature of the mocking or fake api call or pseudo response of the API. it lets us call the api without the initiating of the api call. 
+
+## Snapshot 
+UI designs the wireframes, they had to design and replicate the data in the code format. 
+The UI/UX component with there positions and there code with the wireframes. paramas like pos, elev, etc. And there proper prototyping. 
+**It will check the exact css information of the component and also there functionality.**
+
+**Test Structure** 
+structure **filename.test.js** 
+`
+test("add 2 + 2 = 4"   ) 
+`defines the test case and checks the output. 
+example actual code: 
+`
+export const add= (a, b) => a + b;
+`
+`
+test("checks even", () => {
+    expect(add(5,2)).toBe(7); 
+    //add multiple
+})
+`
+
+to run: `npm test`
