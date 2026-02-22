@@ -385,18 +385,215 @@ The UI/UX component with there positions and there code with the wireframes. par
 
 **Test Structure** 
 structure **filename.test.js** 
-`
+```jsx
 test("add 2 + 2 = 4"   ) 
-`defines the test case and checks the output. 
+```
+defines the test case and checks the output. 
 example actual code: 
-`
+```jsx
 export const add= (a, b) => a + b;
-`
-`
+
 test("checks even", () => {
     expect(add(5,2)).toBe(7); 
     //add multiple
 })
-`
+```
 
 to run: `npm test`
+
+## Integration 
+Fake or **mocking** an API call to reduce the API calls to reduce the 
+1. financial burdain on the workflow. 
+2. 3rd party problem like delay or down. 
+
+```jsx
+// global - window in the browser 
+global.fetch(()=> {
+    Promise.resolve({
+        json: ()=> Promise.resolve({name: "Ansh"});
+    })
+})
+```
+Want to test the render of the object without fetching the API iteself. So we will test the API call. 
+
+1. **reder** > creates a virtual component tree 
+2. **screen** > selects the element from the virtual dom tree, dont load all the component but just the component to be tested. 
+
+**toBe** is an matcher which matches the output given there in the code to be with the parameter given in the code there. 
+
+```jsx
+import { render, screen } from '@testing-library/react';
+import App from './App';
+import * as productAPI from './productAPI';
+
+jest.mock('./productAPI');
+
+test("test the API function with mock", async ()=> {
+   productAPI.API.mockResolvedValue({
+    "name": "Subh", 
+    "age": 22
+   });
+   render(<App />);
+   const nameElement = await screen.findByText(/Name: Subh/i);
+   const ageElement = await screen.findByText(/Age: 22/i);
+   expect(nameElement).toBeInTheDocument();
+   expect(ageElement).toBeInTheDocument();
+})
+```
+
+Here's an explanation of the functions used in this testing code:
+
+## Function Explanations
+
+### `jest.mock('./productAPI')`
+- **Purpose**: Automatically mocks all exports from the `./productAPI` module
+- **What it does**: Replaces the actual API functions with Jest mock functions that can be controlled during testing
+- **Why used**: Prevents actual API calls during testing and allows us to control what the API returns
+
+### `productAPI.API.mockResolvedValue({...})`
+- **Purpose**: Configures the mocked API function to return a resolved Promise with specific data
+- **What it does**: Makes the mocked API function return a Promise that resolves to the provided object `{ "name": "Subh", "age": 22 }`
+- **Why used**: Simulates a successful API response with test data
+
+### `render(<App />)`
+- **Purpose**: Renders the React component in a virtual DOM for testing
+- **What it does**: Mounts the App component and makes it available for queries and assertions
+- **Source**: From `@testing-library/react`
+
+### `screen.findByText(/Name: Subh/i)`
+- **Purpose**: Asynchronously finds an element containing text matching the regex pattern
+- **What it does**: Searches the DOM for an element with text content that matches `/Name: Subh/i` (case-insensitive)
+- **Returns**: A Promise that resolves when the element is found (waits up to 1000ms by default)
+- **Why used**: Ideal for elements that appear after async operations (like API calls)
+
+### `expect(nameElement).toBeInTheDocument()`
+- **Purpose**: Asserts that the element exists in the DOM
+- **What it does**: Verifies that the found element is actually present in the document
+- **Source**: From Jest's expect API combined with Jest DOM matchers
+
+### Key Testing Concepts Used
+
+- **Mocking**: Replacing real implementations with controlled test doubles
+- **Async Testing**: Using `await` with `findBy` queries to handle asynchronous rendering
+- **DOM Assertions**: Verifying that expected content appears after component renders.
+
+
+## SnapShot testing 
+we save the tree structure in the file is called the **Snapshot**. It is to test the structure of the output. **It don't check the logic**. 
+
+
+To update the test snapshot.  
+```cmd
+npm test -- -u 
+```
+
+```jsx
+
+export default function Component({data}) {
+  return (
+    <div>component {data}</div>
+  )
+}
+
+import { render} from '@testing-library/react';
+import Component from "./../component";
+
+
+test("Snap testing", ()=>{ 
+    const data = render(<Component data = "test"/>);
+    expect(data).toMatchSnapshot();
+
+})
+```
+Imports the render function from React Testing Library
+This function renders React components in a test environment,
+Imports the component we want to test from its file location.
+Defines a test case with description "Snap testing"
+The function contains the test logic
+Renders the Component with data="test" prop, Returns an object containing utilities to query the rendered component, 
+
+**Creates a snapshot test**
+1. **First run:** Creates a snapshot file with the rendered output
+2. **Subsequent runs:** Compares current output with saved snapshot
+3. Test fails if they don't match (helps detect unexpected changes)
+
+### What the Test Does
+1. Renders the component with data="test"
+2. Captures the rendered output structure
+3. Saves/compares it to a snapshot file (usually with .snap extension)
+4. This is a common pattern to ensure UI components don't change unexpectedly.
+5. Stores the data snapshot in the file with lots of stuff. 
+```jsx
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+exports[`Snap testing 1`] = `
+Object {
+  "asFragment": [Function],
+  "baseElement": <body>
+    <div>
+      <div>
+        component 
+        test
+      </div>
+    </div>
+  </body>,
+  "container": <div>
+    <div>
+      component 
+      test
+    </div>
+  </div>,
+  "debug": [Function],
+  "findAllByAltText": [Function],
+  "findAllByDisplayValue": [Function],
+  "findAllByLabelText": [Function],
+  "findAllByPlaceholderText": [Function],
+  "findAllByRole": [Function],
+  "findAllByTestId": [Function],
+  "findAllByText": [Function],
+  "findAllByTitle": [Function],
+  "findByAltText": [Function],
+  "findByDisplayValue": [Function],
+  "findByLabelText": [Function],
+  "findByPlaceholderText": [Function],
+  "findByRole": [Function],
+  "findByTestId": [Function],
+  "findByText": [Function],
+  "findByTitle": [Function],
+  "getAllByAltText": [Function],
+  "getAllByDisplayValue": [Function],
+  "getAllByLabelText": [Function],
+  "getAllByPlaceholderText": [Function],
+  "getAllByRole": [Function],
+  "getAllByTestId": [Function],
+  "getAllByText": [Function],
+  "getAllByTitle": [Function],
+  "getByAltText": [Function],
+  "getByDisplayValue": [Function],
+  "getByLabelText": [Function],
+  "getByPlaceholderText": [Function],
+  "getByRole": [Function],
+  "getByTestId": [Function],
+  "getByText": [Function],
+  "getByTitle": [Function],
+  "queryAllByAltText": [Function],
+  "queryAllByDisplayValue": [Function],
+  "queryAllByLabelText": [Function],
+  "queryAllByPlaceholderText": [Function],
+  "queryAllByRole": [Function],
+  "queryAllByTestId": [Function],
+  "queryAllByText": [Function],
+  "queryAllByTitle": [Function],
+  "queryByAltText": [Function],
+  "queryByDisplayValue": [Function],
+  "queryByLabelText": [Function],
+  "queryByPlaceholderText": [Function],
+  "queryByRole": [Function],
+  "queryByTestId": [Function],
+  "queryByText": [Function],
+  "queryByTitle": [Function],
+  "rerender": [Function],
+  "unmount": [Function],
+}
+`;
+```
+
