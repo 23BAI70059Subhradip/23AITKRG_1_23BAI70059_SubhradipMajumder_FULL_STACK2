@@ -597,3 +597,56 @@ Object {
 `;
 ```
 
+# JAVA
+string store in the **string constant pool**. Comparism is done using Hashing the Linked List and the dynamic array. 
+
+## Garbage Collection
+Automated minor and major collection 
+free the memory using the **finalize** function. 
+Heap memo cat into 
+1. **permanent/ protected** - libs no minor not major. as
+2. **new** - new keywords are inserted from the front of the memory. 
+  - **S0 and S1** surviror zones 
+  - S0 collects the object related (minor)
+  - S1 minor gc is happend transfer the object from S0 to S1.  
+3. **old** - Mark and sweep algorithm to collect garbage. eviction polices LRU and MRU. 
+
+permaent + new = eden space exempted from the major garbage collection. 
+**Deamon Thread** uses the executable services.
+
+
+## Why Spring ? 
+Java is not for interpreice application i.e scalable and fast, since object creation was manual it create a depenedincy was manual. Unit test was not possible, coupling was very tight. 
+Spring Came up with inversion of control, giving the power to the program with the help of the **Beans**. 
+**ServeLet** map the request and handle the requests. .war is the extention of the server. Application is deploied in the server. 
+
+**Starter packs (auto configured) and annotaion and tomcat and jetty - spring boot. Prodcuction ready code for faster development.**
+**legacy level code** is the Spring boot, ex - Amazon, netflix etc. but rust beats springboot.
+**Bugs Bounty program** triggers the vulnarablity. o click, 1 click and 2 click.
+
+**Dependency Injection** pass the object from one to other services. 
+1. feild - Autowired always causes the feild injection. may cause the tightcoupling. 
+2. Setter - private and setter 
+3. Constructor injectons (prefered in the industry) - not use the autowired and dont refer to the global but to the local state.
+
+
+### DTO - Data transfer object 
+we should not send the `@Entity` since the data within it can be accessable easily so to provide the security we need to add the DTO. 
+
+```java
+class User{
+  private: 
+    id, email, pass, etc
+}
+
+class UserDTO{
+  private: 
+    email, pass.  
+}
+
+```
+
+**@springboot application**- Act as the entry point to the spring boot and it consists of three parts or tag i.e
+1. **@IOCContainer** - inversion of control using beans stored in the IOC. 
+2. **@AutoConfigaration**- Handle files configaration.
+3. **@ComponentScan**- Scan the contents and collects all the resources and use it.
