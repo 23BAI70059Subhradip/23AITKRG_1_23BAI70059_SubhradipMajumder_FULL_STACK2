@@ -5,11 +5,11 @@ import lombok.*;
 import java.util.List;
 
 @Entity
-@Table(name = "students")
+@Table(name = "tags")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class Student {
+public class Tag {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -17,14 +17,6 @@ public class Student {
 
     private String name;
 
-    private String email;
-
-    @OneToMany(
-            mappedBy = "student",
-            cascade = CascadeType.ALL,
-            fetch = FetchType.LAZY
-    )
-        private List<Course> courses;
-
+    @ManyToMany(mappedBy = "tags")
+    private List<Course> courses;
 }
-

@@ -386,7 +386,7 @@ The UI/UX component with there positions and there code with the wireframes. par
 **Test Structure** 
 structure **filename.test.js** 
 ```jsx
-test("add 2 + 2 = 4"   ) 
+test("add 2 + 2 = 4") 
 ```
 defines the test case and checks the output. 
 example actual code: 
@@ -631,7 +631,7 @@ Spring Came up with inversion of control, giving the power to the program with t
 
 
 ### DTO - Data transfer object 
-we should not send the `@Entity` since the data within it can be accessable easily so to provide the security we need to add the DTO. 
+we should not send the `@Entity` since the data within it can be accessable easily so to provide the security and abstraction we need to add the DTO. 
 
 ```java
 class User{
@@ -650,3 +650,12 @@ class UserDTO{
 1. **@IOCContainer** - inversion of control using beans stored in the IOC. 
 2. **@AutoConfigaration**- Handle files configaration.
 3. **@ComponentScan**- Scan the contents and collects all the resources and use it.
+
+
+## Cascade 
+1. merge 
+2. delete 
+3. persist
+
+## JPQL 
+runs on classes and on the names. 
